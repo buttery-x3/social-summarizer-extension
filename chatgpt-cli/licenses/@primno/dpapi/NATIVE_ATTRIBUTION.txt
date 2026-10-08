@@ -1,0 +1,6 @@
+Native source in @primno/dpapi 2.0.1 (src/dpapi_win.cpp):
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the MIT License.
+Implementation referenced from https://github.com/bradhugh/node-dpapi
+
+Package README credits Brad Hughes for the original code and Microsoft for the N-API port in MSAL-Node-Extension.

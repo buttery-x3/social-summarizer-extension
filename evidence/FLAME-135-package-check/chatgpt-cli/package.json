@@ -1,0 +1,29 @@
+{
+  "name": "social-summarizer-chatgpt-feasibility",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": { "node": ">=24.15.0 <25" },
+  "packageManager": "npm@11.12.1",
+  "scripts": {
+    "build:sdk": "node scripts/verify-vendor.mjs && tsc -p vendor/devkit/packages/local/tsconfig.json && node vendor/devkit/scripts/copy-package-notices.mjs vendor/devkit/packages/local/dist",
+    "build": "npm run build:sdk && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "chatgpt": "node dist/cli.js",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "test:sdk": "node --experimental-strip-types --test vendor/devkit/packages/local/test/*.test.mjs"
+  },
+  "dependencies": {
+    "@primno/dpapi": "2.0.1",
+    "@siwc/local": "file:vendor/devkit/packages/local",
+    "jose": "6.2.12",
+    "openai": "7.21.0",
+    "proper-lockfile": "4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.5",
+    "@types/proper-lockfile": "4.1.4",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+vendor/devkit/packages/local/dist/
+*.log
+chatgpt-auth.json
+chatgpt-host.json
+.chatgpt-auth.*.tmp
+*.lock/

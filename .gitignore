@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.native-host/
+evidence/*.png
+evidence/chrome-live.json
+evidence/*.zip
+.research/
+chatgpt-auth.json
+chatgpt-host.json
+.chatgpt-auth.*.tmp

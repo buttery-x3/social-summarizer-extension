@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Flamehorn Native Helper Spike",
+  "version": "0.1.0",
+  "minimum_chrome_version": "120",
+  "description": "Windows Native Messaging hello/ping feasibility test",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxVBbIEKFdn+IKAiSoNZAozlXjwoQaWBR+H9Fuxpb12hv/DzsydcAaDr9Gr1JsKHRSgTHyP3vuxU+DshPrMdLlK/IbDmEbVzmL1YUZW64mJ68f0r9g9kDnInVVdyZE2yGvIaQHCDnnr/TfcAWPkFXeYRKt25JXu+xVVNixp5SpR0lI8tTNJgWVIo7XHzgivY/nNqN335j0tmj5yPzEBIBptZZY9ZQiBwolgfycj+D6t4kL8NabJbylzJxd0XO7ETWu1ylaT97SO1Y0SBFsknTcAWiTMdOkSWNMIcGF5J6lD5r3gdQomFVjzAVBZE5PfTVV1kYqpM0D80oXnEt2EvQxwIDAQAB",
+  "permissions": [
+    "nativeMessaging"
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Test native helper",
+    "default_popup": "test.html"
+  }
+}

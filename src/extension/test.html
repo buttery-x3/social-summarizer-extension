@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Native helper connection test</title>
+  <link rel="stylesheet" href="test.css">
+</head>
+<body>
+  <main>
+    <h1>Native helper connection test</h1>
+    <p>Chrome starts a local Node 24 helper when you test the connection.</p>
+    <p>Extension ID: <code id="extension-id"></code></p>
+    <div class="actions">
+      <button id="test" type="button">Test helper connection</button>
+      <button id="disconnect" type="button" disabled>Disconnect</button>
+    </div>
+    <p id="status" role="status" aria-live="polite" data-state="disconnected">Connecting to extension service worker…</p>
+    <h2>Real helper response</h2>
+    <pre id="result">No response yet.</pre>
+    <p class="note">Disconnect or close this page to stop the helper. Click Test again to send another ping or start a fresh connection.</p>
+  </main>
+  <script type="module" src="test-page.js"></script>
+</body>
+</html>

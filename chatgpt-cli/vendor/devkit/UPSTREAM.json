@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/openai/sign-in-with-chatgpt-devkit",
+  "revision": "0a36fefeb913055c8c7a1a29b63d82b96b2e841a",
+  "retrieved": "2026-10-08",
+  "scope": "Unmodified packages/local source and tests, build configuration, notice copier and upstream notices. No Electron, fonts or branded assets are bundled.",
+  "sha256": {
+    "docs/dependency-inventory.json": "44e8e0c03b0cc58403dfa0effffbf58880be4e6e5bcf351f843a2d068e064182",
+    "LICENSE": "d9e6108614830cd36b06f475960cfd3bae7236db5d67d615874ec0d3646a4e5d",
+    "packages/local/LICENSE": "d9e6108614830cd36b06f475960cfd3bae7236db5d67d615874ec0d3646a4e5d",
+    "packages/local/package.json": "3302a43d62a452f4cdf8d9da5685362988f8f17a212c544a814d8533349cf22c",
+    "packages/local/src/errors.ts": "863ec26f343087cb3cc3c50582f5682d4861ed13ad8109c217a6a789ffa29754",
+    "packages/local/src/index.ts": "c232e8cbb8761b151e073d4f57f8373b321b1397afd4a58f454e23268c9b5bd4",
+    "packages/local/src/models.ts": "84757bd30c36c32b271aa4416dfcb5fdb214232407af3c536a4adb5df6675389",
+    "packages/local/src/oauth.ts": "f46db9ee39ce71ba59144544d47d9fcab0947998d0256a5acaa0e2b3fc260926",
+    "packages/local/src/responses.ts": "e3275c79b0333b06896b28a65bfb967e989914c2e4f4be9718c383f6a08d2ff8",
+    "packages/local/src/storage.ts": "5c73d963e86d76cae0926d72badeeb37dc0e4bb7cbf812928923f1753b306333",
+    "packages/local/src/types.ts": "158b1af7ee4bf9adf4ed8564c17d7b17201c56d334a684da1d8a0fb344ce2b7d",
+    "packages/local/test/authorization.test.mjs": "b6e56d639b82f2fd437465b376e7756b16b2bbdd29340ff8da402675d748046a",
+    "packages/local/test/errors.test.mjs": "042e94bd8c9a1d567b4d5c31ed373d59bed9a6210fb21ec91d9c498f9b9c5638",
+    "packages/local/test/refresh.test.mjs": "5013125ead1b27933d985787319964c88fa2f18bd3c79f092f8edf9490773696",
+    "packages/local/test/responses.test.mjs": "7782d3d4ab7a510dfbbcc341302a043fc3e1b9bedc524e104b7e2b69adb7dcc7",
+    "packages/local/test/storage.test.mjs": "4af8b3511053ebac0ad958f2f57ff491abbddd6838016fe156586e126ad665ad",
+    "packages/local/tsconfig.json": "352c3e79bd5551adf2f467d2852ce54547fa1220c88f995577e50a9c956c8890",
+    "scripts/copy-package-notices.mjs": "f7880aea613b63953f265a52237bfcc7f11c69e97ffda5e68b6f44c7390f6369",
+    "THIRD_PARTY_NOTICES.md": "e06c28666a02343ffb87684c891ed5771f7819896d0f6e64d0390ce9a998f967",
+    "tsconfig.base.json": "9bc86be3dbe0e1cdaa8029f57db321f5238e5bbc471e22e5d2953e517b7deb94"
+  }
+}

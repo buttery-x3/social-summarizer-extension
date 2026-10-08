@@ -1,0 +1,22 @@
+{
+  "name": "social-summarizer-native-messaging-spike",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test --experimental-strip-types tests/*.test.ts",
+    "test:chrome": "npm run build && node scripts/test-chrome.mjs",
+    "test:registration": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/registration.test.ps1",
+    "extension:id": "node scripts/extension-id.mjs"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.0",
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "playwright": "^1.56.0",
+    "typescript": "^5.9.0"
+  }
+}
