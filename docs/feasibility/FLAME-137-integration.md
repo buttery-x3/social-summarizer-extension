@@ -75,6 +75,7 @@ Agent-observed checks on **8 October 2026**, Windows x64, Node **24.15.0**, npm 
 | `npm run chatgpt -- help` | Passed; retained diagnostic commands/options |
 | `npm run test:integration` | 19 Chrome/native/shared-client/SDK checks passed with the **synthetic provider boundary** |
 | `npm run test:chrome` | Passed original native-only hello/ping/disconnect/termination/re-registration/page-close checks with protocol v2; [native transport report](evidence/FLAME-137-chrome-native.json) |
+| `npm run test:integration:live` | Passed after explicit user authorisation: two real summaries displayed in Chrome with `gpt-6.1-sol`, following Thursday then Sunday |
 
 The [synthetic Chrome report](evidence/FLAME-137-chrome-synthetic.json) records both actual extension fixtures reaching the model request body, the changed deadline, one request despite repeat clicks, and literal script markup displayed as text. It covers signed-out/plan-disabled versus missing helper, unavailable model, usage/network errors, abrupt EOF, incomplete/empty output, oversized UTF-8 output, cancel/retry, timeout/retry, tab close during inference, verified host termination and recovery, and production hello/ping after re-registration. Default tests also deliberately resolve an aborted backend late and require no success, validate malformed/duplicate IDs and ensure an oversized input never calls the model.
 
@@ -84,7 +85,9 @@ The first Chrome run failed only because its timeout-retry assertion expected Th
 
 ## Live acceptance and explicit recipe
 
-**Pending user-authorised live verification.** Earlier user-confirmed CLI inference/restart reuse in FLAME-135/136 is background evidence, not an extension-to-model result for this issue. The synthetic Chrome report does not satisfy live acceptance.
+**Live acceptance passed after explicit user authorisation.** The test completed on 8 October 2026 at **22:21 AEDT (11:21 UTC)** after the user authorised the two real summaries. The agent ran `npm run test:integration:live` with installed Chrome **154.0.8037.98**, the production CommonJS native host and the user's existing protected ChatGPT connection. Both completed summaries were displayed in the extension with the discovered model **`gpt-6.1-sol`**. The original fixture's result required attendance confirmation by **Thursday**; the changed extension-supplied fixture's result required it by **Sunday**. The actual nonempty completed text and model are preserved in the [live Chrome report](evidence/FLAME-137-chrome-live.json). The screenshot was visually inspected; it displays the changed transcript, completed result and model in Chrome.
+
+The test used an isolated browser profile, disconnected its helper afterward and restored the previous registration/launcher state. It opened no sign-in flow and cleared no saved connection. This is agent-observed extension → native helper → real ChatGPT → displayed summary evidence. Earlier user-confirmed CLI inference/restart reuse in FLAME-135/136 remains background evidence; synthetic failure coverage remains separately labelled.
 
 After authorising two invented model requests using your existing connection:
 

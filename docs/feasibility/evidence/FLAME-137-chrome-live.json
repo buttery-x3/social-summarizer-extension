@@ -1,0 +1,22 @@
+{
+  "testedAt": "2026-10-08T11:21:23.627Z",
+  "node": "v24.15.0",
+  "chrome": "Chrome/154.0.8037.98",
+  "extensionId": "lcfdfljeffdfjefbbokfbldjkgiickfo",
+  "mode": "LIVE: installed Chrome and production native host; existing protected ChatGPT connection; two real model requests.",
+  "allPassed": true,
+  "results": [
+    {
+      "check": "first fixture and repeat click",
+      "passed": true,
+      "text": "- **Decision:** Board-game night is Friday at 6 pm, with Jo hosting up to four players.\n- **Responsibilities:** Sam brings the card game and snacks; Jo hosts; everyone confirms attendance.\n- **Deadline:** Confirm attendance by Thursday.",
+      "model": "gpt-6.1-sol"
+    },
+    {
+      "check": "changed extension-supplied fact",
+      "passed": true,
+      "text": "- **Decision:** Board-game night is Friday at 6 pm, hosted by Jo for four players.\n- **Responsibilities:** Sam brings the card game and snacks; Jo hosts.\n- **Deadline:** Everyone confirms attendance by Sunday.",
+      "model": "gpt-6.1-sol"
+    }
+  ]
+}
