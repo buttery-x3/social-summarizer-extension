@@ -1,6 +1,6 @@
 # Social Summarizer feasibility workspace
 
-One small project with two runtime components: a Chrome extension and its Windows local helper. The existing demonstrations remain separate: Chrome exchanges hello/ping over Native Messaging; the helper's diagnostic CLI signs in with ChatGPT and summarises a built-in invented transcript. Connecting those operations is later work.
+One small project with two runtime components: a Chrome extension and its Windows local helper. The extension's persistent test tab sends an invented conversation through Native Messaging to the helper's existing ChatGPT connection and displays a completed summary and model. Sign-in stays in the diagnostic CLI; credentials stay in the helper. Discord capture is later work.
 
 ## Install and check
 
@@ -24,10 +24,10 @@ Build order is protocol → SDK integrity check/build/notice copying → helper 
 | Workspace | Responsibility | Build output |
 | --- | --- | --- |
 | `apps/extension` | Existing MV3 page, service worker and connection lifecycle; browser/Chrome types only | `dist/extension` |
-| `apps/helper` | Native framing/hello/ping plus reusable ChatGPT client, DPAPI and storage; `src/cli.ts` is a diagnostic entry point | `dist/host/index.cjs`; `apps/helper/dist/cli.js` and `apps/helper/dist/chatgpt/` |
+| `apps/helper` | Native framing, async summary/cancellation, reusable ChatGPT client, DPAPI and storage; `src/cli.ts` is a diagnostic entry point | `dist/host/index.cjs`; `apps/helper/dist/cli.js` and `apps/helper/dist/chatgpt/` |
 | `packages/protocol` | Browser-safe message types, constants and request/response validation | `packages/protocol/dist` |
 
-The helper owns command execution. The native host currently imports only native transport and protocol modules; it does not load ChatGPT or spawn the CLI. The extension bundles only extension/protocol code. The DevKit is the helper's pinned local dependency, outside the first-party workspace list. TypeScript **5.9.3** remains in the browser/protocol/root checks and **7.0.2** in the helper/SDK, with their original Node type versions.
+The CommonJS native bundle contains native/protocol code and lazily imports the shared helper ESM client for status/summary operations. Installed SDK/DPAPI dependencies resolve from `apps/helper/dist`; native binaries are not bundled. Hello/ping needs no ChatGPT connection. The extension bundles only extension/protocol code. The DevKit is the helper's pinned local dependency, outside the first-party workspace list. TypeScript **5.9.3** remains in the browser/protocol/root checks and **7.0.2** in the helper/SDK, with their original Node type versions.
 
 Targeted commands from the root:
 
@@ -55,8 +55,19 @@ Registration resolves an absolute Node 24 executable. Use `-NodePath 'C:\path\to
 
 1. Open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose the root **`dist/extension`** directory.
 2. Confirm ID **`lcfdfljeffdfjefbbokfbldjkgiickfo`**. The original public manifest key is unchanged.
-3. Open `chrome-extension://lcfdfljeffdfjefbbokfbldjkgiickfo/test.html` or the toolbar popup. Click **Test helper connection** to exchange hello/ping; click again to reuse the process.
-4. Click **Disconnect**, then Test to start a new process. Closing the page also stops its helper. Full process/recovery steps are in [FLAME-134](docs/feasibility/FLAME-134-native-messaging.md).
+3. Open `chrome-extension://lcfdfljeffdfjefbbokfbldjkgiickfo/test.html`, or click the toolbar icon to open that persistent tab. Click **Test helper connection** to exchange hello/ping; click again to reuse the process.
+4. Click **Check ChatGPT connection**. If signed out, run `npm run chatgpt -- sign-in` from this root and complete browser consent. If plan permission is disabled, use `npm run chatgpt -- sign-in --consent`. Then check again in the tab.
+5. Click **Summarise test conversation**. This explicit action uses your ChatGPT plan. Require **Completed summary**, nonempty text and a model. Change both occurrences of Thursday to Sunday and explicitly summarise again; the result should follow the changed deadline.
+6. **Cancel** stops a current request. **Disconnect**, reload or closing the tab closes its helper. Retries are explicit. Hello/ping has a 5s deadline; each connection/model operation has a 180s deadline. No percentages or partial output count as completion.
+
+The reproducible integration checks use an isolated Chrome profile:
+
+```powershell
+npm run test:integration       # Real Chrome/native/SDK/DPAPI; synthetic provider, isolated credentials
+npm run test:integration:live  # Explicit live test: two invented summaries using your saved ChatGPT connection
+```
+
+Run the live command only when you authorise that plan usage. Neither command opens sign-in or clears real credentials. Integration checks ownership-check and temporarily change this checkout's registration/launcher, then restore their previous state. Close other test tabs first. Failure cases use a separate synthetic host entry; production registration has no mock switch. See [FLAME-137 decisions and evidence](docs/feasibility/FLAME-137-integration.md) for exact coverage and remaining live checks.
 
 The real automated Windows test uses installed Chrome and a disposable profile:
 
@@ -88,7 +99,7 @@ If signed out, run `npm run chatgpt -- sign-in`, complete **Continue with ChatGP
 
 All previous commands/options remain available, including `profiles`, `select PROFILE_ID`, `sign-in --new`, `sign-in --consent`, `summary --model SLUG`, `--timeout-ms N`, `disconnect` and `clear-local-credentials`. The two disconnect commands intentionally revoke the selected session and clear its local tokens; they are not migration steps. Ctrl+C cancels sign-in/requests.
 
-`CHATGPT_SPIKE_STORAGE_DIR` still defaults to `%LOCALAPPDATA%\SocialSummarizerChatGPTSpike`; `CHATGPT_SPIKE_PORT` still defaults to `0`. App/client/profile/installation identities, CurrentUser DPAPI entropy/provider ID and authenticated envelope format are preserved. Auth/storage code exists once in `apps/helper/src/chatgpt`, available to the CLI and a later host integration. Detailed configuration, protection, commands and historical evidence are in [FLAME-135](docs/feasibility/FLAME-135-chatgpt.md).
+`CHATGPT_SPIKE_STORAGE_DIR` still defaults to `%LOCALAPPDATA%\SocialSummarizerChatGPTSpike`; `CHATGPT_SPIKE_PORT` still defaults to `0`. App/client/profile/installation identities, CurrentUser DPAPI entropy/provider ID and authenticated envelope format are preserved. Auth/storage code exists once in `apps/helper/src/chatgpt`, shared by the CLI and native host. Detailed configuration, protection, commands and historical evidence are in [FLAME-135](docs/feasibility/FLAME-135-chatgpt.md).
 
 ## Evidence, licensing and next work
 
@@ -96,4 +107,4 @@ All previous commands/options remain available, including `profiles`, `select PR
 
 The owner has not chosen an application licence: first-party packages retain `UNLICENSED`, and this cleanup grants no redistribution rights. Existing third-party rights and notices remain intact. The unmodified DevKit has its own **noncommercial licence**, not MIT/Apache; see [helper third-party notices](apps/helper/THIRD_PARTY_NOTICES.md) and the [upstream licence](apps/helper/vendor/devkit/LICENSE).
 
-Later integration must address the five-second ping timeout and page-owned connection, hello/ping-only protocol and 64 KiB frame cap, CommonJS/ESM and native dependency packaging, and asynchronous cancellation/completion. Discord capture, auth/summary protocol operations, installers and UI changes are outside this cleanup. The intended Discord workflow remains user-started capture while the user manually scrolls, followed by an explicit summary request. Consolidation alone does not complete milestone 1.
+[FLAME-137](docs/feasibility/FLAME-137-integration.md) integrates explicit summary/cancellation using protocol v2 and the existing 64 KiB UTF-8 JSON cap. Rebuild and reload extension/helper together after this protocol change. Paths, extension ID, host name, protected storage and pinned SDK/notices are preserved. Discord capture and production installers remain future work. The intended Discord workflow remains user-started capture while the user manually scrolls, followed by an explicit summary request. This invented-text integration alone does not complete that workflow or milestone 1.

@@ -1,0 +1,137 @@
+{
+  "testedAt": "2026-10-08T11:16:16.563Z",
+  "windows": {
+    "Build": "26300",
+    "Version": "10.0.26300",
+    "Caption": "Microsoft Windows 11 Pro",
+    "Architecture": "64-bit",
+    "UBR": 9457,
+    "DisplayVersion": "26H2"
+  },
+  "node": "v24.15.0",
+  "chrome": "Chrome/154.0.8037.98",
+  "extensionId": "lcfdfljeffdfjefbbokfbldjkgiickfo",
+  "mode": "Installed Google Chrome, headless, isolated temporary persistent profile; real native host, no mocked Chrome APIs.",
+  "results": [
+    {
+      "label": "initial hello + ping",
+      "response": {
+        "version": 2,
+        "id": "5544e433-50fe-4040-9669-decc1ef03133",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 32728,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        },
+        "capabilities": [
+          "auth.status",
+          "summary.start",
+          "summary.cancel"
+        ]
+      },
+      "detail": "Ping passed. Protocol 2; matching request ID 5544e433-50fe-4040-9669-decc1ef03133."
+    },
+    {
+      "label": "second ping on same native port",
+      "response": {
+        "version": 2,
+        "id": "967620db-0a02-4d63-bc16-09f86ad67591",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 32728,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        },
+        "capabilities": [
+          "auth.status",
+          "summary.start",
+          "summary.cancel"
+        ]
+      },
+      "detail": "Ping passed. Protocol 2; matching request ID 967620db-0a02-4d63-bc16-09f86ad67591."
+    },
+    {
+      "label": "explicit disconnect",
+      "pid": 32728,
+      "exited": true
+    },
+    {
+      "label": "fresh connection after explicit disconnect",
+      "response": {
+        "version": 2,
+        "id": "b68fac34-fb34-4fc0-8a6d-2527a7787209",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 28404,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        },
+        "capabilities": [
+          "auth.status",
+          "summary.start",
+          "summary.cancel"
+        ]
+      },
+      "detail": "Ping passed. Protocol 2; matching request ID b68fac34-fb34-4fc0-8a6d-2527a7787209."
+    },
+    {
+      "label": "terminated helper",
+      "pid": 28404,
+      "detail": "Helper disconnected unexpectedly. Click Test helper connection to start a fresh helper, then explicitly retry."
+    },
+    {
+      "label": "fresh connection after terminated helper",
+      "response": {
+        "version": 2,
+        "id": "aab763fa-d0a6-44f8-b8a6-4aa6258340ca",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 11104,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        },
+        "capabilities": [
+          "auth.status",
+          "summary.start",
+          "summary.cancel"
+        ]
+      },
+      "detail": "Ping passed. Protocol 2; matching request ID aab763fa-d0a6-44f8-b8a6-4aa6258340ca."
+    },
+    {
+      "label": "unregistered helper",
+      "detail": "Helper is not registered. Run scripts/register-host.ps1 from the repository root, then retry."
+    },
+    {
+      "label": "fresh connection after re-register",
+      "response": {
+        "version": 2,
+        "id": "6ad1378b-aa95-4c43-bd30-33187d432920",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 23528,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        },
+        "capabilities": [
+          "auth.status",
+          "summary.start",
+          "summary.cancel"
+        ]
+      },
+      "detail": "Ping passed. Protocol 2; matching request ID 6ad1378b-aa95-4c43-bd30-33187d432920."
+    },
+    {
+      "label": "test page closed",
+      "pid": 23528,
+      "exited": true
+    }
+  ],
+  "allPassed": true
+}

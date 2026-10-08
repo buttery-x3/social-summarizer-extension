@@ -48,8 +48,8 @@ async function connect(page, label) {
   await page.getByRole('button', { name: 'Test helper connection', exact: true }).click();
   await page.waitForFunction(() => document.querySelector('#status')?.dataset.state === 'connected' &&
     document.querySelector('#status')?.textContent?.startsWith('Ping passed.'), undefined, { timeout: 10000 });
-  const response = JSON.parse(await page.locator('#result').innerText());
-  assert.equal(response.version, 1);
+  const response = JSON.parse(await page.locator('#result').textContent());
+  assert.equal(response.version, 2);
   assert.equal(response.type, 'pong');
   assert.match(response.id, /^[a-f0-9-]{36}$/);
   assert.equal(response.host.nodeVersion, process.version);

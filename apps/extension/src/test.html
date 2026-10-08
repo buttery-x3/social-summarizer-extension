@@ -3,22 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Native helper connection test</title>
+  <title>Test conversation summary</title>
   <link rel="stylesheet" href="test.css">
 </head>
 <body>
   <main>
-    <h1>Native helper connection test</h1>
-    <p>Chrome starts a local Node 24 helper when you test the connection.</p>
+    <h1>Test conversation summary</h1>
+    <p>This tab sends the invented conversation below to your local helper and ChatGPT connection when you click Summarise.</p>
     <p>Extension ID: <code id="extension-id"></code></p>
+    <p><strong id="helper-status">Helper disconnected</strong><br><span id="chatgpt-status">ChatGPT connection not checked</span></p>
+    <label for="transcript">Invented conversation (you can change a fact to test the result)</label>
+    <textarea id="transcript" rows="6" spellcheck="false"></textarea>
     <div class="actions">
-      <button id="test" type="button">Test helper connection</button>
-      <button id="disconnect" type="button" disabled>Disconnect</button>
+      <button id="summary" type="button">Summarise test conversation</button>
+      <button id="cancel" type="button" disabled>Cancel</button>
     </div>
     <p id="status" role="status" aria-live="polite" data-state="disconnected">Connecting to extension service worker…</p>
-    <h2>Real helper response</h2>
-    <pre id="result">No response yet.</pre>
-    <p class="note">Disconnect or close this page to stop the helper. Click Test again to send another ping or start a fresh connection.</p>
+    <h2>Completed summary</h2>
+    <p>Model: <code id="model">—</code></p>
+    <pre id="summary-result">No completed summary yet.</pre>
+    <div class="actions">
+      <button id="test" type="button">Test helper connection</button>
+      <button id="check" type="button">Check ChatGPT connection</button>
+      <button id="disconnect" type="button" disabled>Disconnect</button>
+    </div>
+    <details><summary>Hello/ping diagnostic</summary><pre id="result">No diagnostic response yet.</pre></details>
+    <p class="note">From the repository root, use <code>npm run chatgpt -- sign-in</code> if signed out, or <code>npm run chatgpt -- sign-in --consent</code> to enable plan permission. Then check the connection or explicitly retry here.</p>
+    <p class="note">Cancel stops the current request. Disconnect or close this tab to stop its helper. No summary or sign-in starts automatically.</p>
   </main>
   <script type="module" src="test-page.js"></script>
 </body>

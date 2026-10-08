@@ -19,6 +19,8 @@
     "verify:vendor": "npm run verify:vendor -w apps/helper",
     "chatgpt": "npm run chatgpt -w apps/helper --",
     "test:chrome": "npm run build && node scripts/test-chrome.mjs",
+    "test:integration": "npm run build && node scripts/test-chrome-summary.mjs",
+    "test:integration:live": "npm run build && node scripts/test-chrome-summary.mjs --live",
     "test:registration": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/registration.test.ps1",
     "extension:id": "node scripts/extension-id.mjs"
   },

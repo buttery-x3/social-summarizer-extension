@@ -9,3 +9,5 @@
 The prior [FLAME-134 results](../FLAME-134-results.md) retain their recorded versions/PIDs/timing. Original generated attachments remain available on the completed issues. Historical FLAME-135 live-test statements in the archive predate the later user confirmation; the [current write-up](../FLAME-135-chatgpt.md) reconciles that evidence.
 
 `npm run test:chrome` writes ignored `chrome-live.json` and screenshots here. The recorded FLAME-136 rerun is preserved as `FLAME-136-chrome-live.json`. It contains native-transport results only, without account or credential data.
+
+`FLAME-137-chrome-synthetic.json` records the integration's real Chrome/native/shared-client/SDK/DPAPI path with a **synthetic provider fetch boundary** and temporary synthetic credentials. Its summary strings intentionally include literal script markup to verify text rendering. This is not live account evidence. The integration commands write `FLAME-137-chrome-synthetic.json` or, after explicit authorisation, `FLAME-137-chrome-live.json`; screenshots are ignored. Current live status and limitations are in [FLAME-137](../FLAME-137-integration.md).

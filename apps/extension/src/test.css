@@ -2,12 +2,15 @@ body { font: 16px/1.5 system-ui, sans-serif; margin: 0; color: #243143; backgrou
 main { max-width: 760px; margin: 40px auto; padding: 28px; background: white; border: 1px solid #d4dce6; border-radius: 12px; }
 h1 { font-size: 26px; margin-top: 0; }
 h2 { font-size: 18px; }
-.actions { display: flex; gap: 12px; margin: 24px 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+textarea { display: block; width: 100%; box-sizing: border-box; margin-top: 8px; padding: 12px; font: inherit; resize: vertical; }
 button { padding: 10px 16px; border: 1px solid #576477; border-radius: 6px; cursor: pointer; font: inherit; }
-#test { color: white; background: #2457a7; border-color: #2457a7; }
+#summary { color: white; background: #2457a7; border-color: #2457a7; }
 button:disabled { opacity: .5; cursor: default; }
 #status { padding: 12px; background: #eef2f7; overflow-wrap: anywhere; }
 #status[data-state=connected] { background: #e4f6ed; }
+#status[data-state=completed] { background: #e4f6ed; }
+#status[data-state=failed] { background: #fbe7e7; }
 #status[data-state=error] { background: #fbe7e7; }
 pre { padding: 16px; background: #f5f7fa; white-space: pre-wrap; overflow-wrap: anywhere; border-radius: 6px; }
 .note { color: #576477; }
