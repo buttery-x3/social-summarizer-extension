@@ -15,11 +15,11 @@ if (!target) {
     if (result.status !== 0) process.exit(result.status ?? 1);
   }
 } else if (target === 'helper') {
-  const result = await build({ absWorkingDir: root, entryPoints: ['apps/helper/src/native/index.ts'],
+  const result = await build({ absWorkingDir: root, entryPoints: ['apps/helper/src/native/main.ts'],
     outfile: 'dist/host/index.cjs', bundle: true, platform: 'node', target: 'node24',
     format: 'cjs', sourcemap: true, metafile: true });
   await writeFile(path.join(root, 'dist/host-metafile.json'), JSON.stringify(result.metafile, null, 2) + '\n');
-  console.log('Built dist/host/index.cjs; ESM ChatGPT diagnostics remain in apps/helper/dist.');
+  console.log('Built dist/host/index.cjs; native requests lazily import the shared ESM client in apps/helper/dist.');
 } else if (target === 'extension') {
   await mkdir(path.join(root, 'dist/extension'), { recursive: true });
   const result = await build({ absWorkingDir: root,

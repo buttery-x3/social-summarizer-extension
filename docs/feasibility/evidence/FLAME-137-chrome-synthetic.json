@@ -1,0 +1,99 @@
+{
+  "testedAt": "2026-10-08T11:17:52.910Z",
+  "node": "v24.15.0",
+  "chrome": "Chrome/154.0.8037.98",
+  "extensionId": "lcfdfljeffdfjefbbokfbldjkgiickfo",
+  "mode": "SYNTHETIC MODEL BOUNDARY: installed Chrome and real Native Messaging/dispatcher/Windows DPAPI/shared client/pinned SDK; provider fetch replaced in separate test entry; isolated credentials.",
+  "allPassed": true,
+  "results": [
+    {
+      "check": "first fixture and repeat click",
+      "passed": true,
+      "text": "<script>window.syntheticExecuted = true</script>\nDecision: board-game night. Deadline: Thursday.",
+      "model": "synthetic-model"
+    },
+    {
+      "check": "changed extension-supplied fact",
+      "passed": true,
+      "text": "<script>window.syntheticExecuted = true</script>\nDecision: board-game night. Deadline: Sunday.",
+      "model": "synthetic-model"
+    },
+    {
+      "check": "signed-out",
+      "passed": true,
+      "detail": "ChatGPT is signed out. Run npm run chatgpt -- sign-in from the repository root, then click Check ChatGPT connection or retry."
+    },
+    {
+      "check": "plan-disabled",
+      "passed": true,
+      "detail": "ChatGPT plan permission is disabled. Run npm run chatgpt -- sign-in --consent and allow plan use, then retry."
+    },
+    {
+      "check": "no-models",
+      "passed": true,
+      "detail": "No usable model is available. Check npm run chatgpt -- models and your ChatGPT connection, then retry."
+    },
+    {
+      "check": "usage",
+      "passed": true,
+      "detail": "ChatGPT usage is unavailable or limited. Check app usage in ChatGPT settings and retry when available."
+    },
+    {
+      "check": "network",
+      "passed": true,
+      "detail": "Could not reach or renew the ChatGPT connection. Check your network and retry shortly."
+    },
+    {
+      "check": "interrupted",
+      "passed": true,
+      "detail": "ChatGPT did not complete a nonempty summary. Partial output was discarded. Retry when ready."
+    },
+    {
+      "check": "incomplete",
+      "passed": true,
+      "detail": "ChatGPT did not complete a nonempty summary. Partial output was discarded. Retry when ready."
+    },
+    {
+      "check": "empty",
+      "passed": true,
+      "detail": "ChatGPT did not complete a nonempty summary. Partial output was discarded. Retry when ready."
+    },
+    {
+      "check": "oversized",
+      "passed": true,
+      "detail": "The summary exceeds the 64 KiB UTF-8 JSON limit. Try a shorter conversation."
+    },
+    {
+      "check": "explicit cancel",
+      "passed": true
+    },
+    {
+      "check": "explicit retry after cancellation",
+      "passed": true
+    },
+    {
+      "check": "model timeout",
+      "passed": true
+    },
+    {
+      "check": "explicit retry after timeout",
+      "passed": true
+    },
+    {
+      "check": "tab close during inference",
+      "passed": true
+    },
+    {
+      "check": "host termination and recovery in same tab",
+      "passed": true
+    },
+    {
+      "check": "missing helper differs from signed-out/plan-disabled",
+      "passed": true
+    },
+    {
+      "check": "production host hello/ping after re-registration",
+      "passed": true
+    }
+  ]
+}

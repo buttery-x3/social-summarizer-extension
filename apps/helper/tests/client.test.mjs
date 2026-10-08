@@ -8,7 +8,7 @@ import { createChatGPT } from '@siwc/local';
 import { ConnectionStore } from '../vendor/devkit/packages/local/dist/storage.js';
 import { createDpapiEncryption } from '../dist/chatgpt/dpapi.js';
 import { prepareStorage } from '../dist/chatgpt/storage.js';
-import { inventedTranscript, summariseInventedTranscript } from '../dist/chatgpt/client.js';
+import { inventedTranscript, summariseInventedTranscript, summariseTranscript } from '../dist/chatgpt/client.js';
 
 async function fixture(t, openBrowser = () => assert.fail('No browser expected')) {
   const directory = await mkdtemp(join(tmpdir(), 'chatgpt-client-test-'));
@@ -37,6 +37,7 @@ test('invented summary uses discovered model and the minimal request; partial ou
   await seed(store);
   let outcome = 'completed';
   let inferenceCalls = 0;
+  let expectedTranscript = inventedTranscript;
   t.mock.method(globalThis, 'fetch', async (url, options) => {
     if (String(url) === 'https://api.openai.com/v1/models') return Response.json({ models: [
       { slug: 'hidden', display_name: 'Hidden', visibility: 'hidden' },
@@ -49,7 +50,8 @@ test('invented summary uses discovered model and the minimal request; partial ou
     assert.equal(body.model, 'fixture-model');
     assert.equal(body.store, false);
     assert.equal(body.stream, true);
-    assert.deepEqual(body.input, [{ role: 'user', content: inventedTranscript }]);
+    assert.deepEqual(body.input, [{ role: 'user', content: expectedTranscript }]);
+    assert.match(body.instructions, /source material/);
     const events = [{ type: 'response.output_text.delta', delta: outcome === 'empty' ? '' : 'Synthetic summary.' }];
     if (outcome === 'completed' || outcome === 'empty') events.push({ type: 'response.completed' });
     if (outcome === 'failed') events.push({ type: 'response.failed', response: { error: {
@@ -63,6 +65,9 @@ test('invented summary uses discovered model and the minimal request; partial ou
   assert.deepEqual(await summariseInventedTranscript(client, AbortSignal.timeout(5000)), {
     model: 'fixture-model', text: 'Synthetic summary.',
   });
+  expectedTranscript = inventedTranscript.replaceAll('Thursday', 'Sunday');
+  assert.deepEqual(await summariseTranscript(client, expectedTranscript, AbortSignal.timeout(5000)), { model: 'fixture-model', text: 'Synthetic summary.' });
+  expectedTranscript = inventedTranscript;
   for (const [mode, code] of [['interrupted', 'stream_interrupted'], ['failed', 'subscription_sharing_usage_limit_exceeded'],
     ['incomplete', 'response_incomplete'], ['empty', 'empty_response']]) {
     outcome = mode;
