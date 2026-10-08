@@ -1,0 +1,112 @@
+{
+  "testedAt": "2026-10-08T09:55:22.698Z",
+  "windows": {
+    "Build": "26300",
+    "Version": "10.0.26300",
+    "Caption": "Microsoft Windows 11 Pro",
+    "Architecture": "64-bit",
+    "UBR": 9457,
+    "DisplayVersion": "26H2"
+  },
+  "node": "v24.15.0",
+  "chrome": "Chrome/154.0.8037.98",
+  "extensionId": "lcfdfljeffdfjefbbokfbldjkgiickfo",
+  "mode": "Installed Google Chrome, headless, isolated temporary persistent profile; real native host, no mocked Chrome APIs.",
+  "results": [
+    {
+      "label": "initial hello + ping",
+      "response": {
+        "version": 1,
+        "id": "b46e6d54-e065-4301-99ec-3912eb22e9fe",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 31332,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        }
+      },
+      "detail": "Ping passed. Protocol 1; matching request ID b46e6d54-e065-4301-99ec-3912eb22e9fe."
+    },
+    {
+      "label": "second ping on same native port",
+      "response": {
+        "version": 1,
+        "id": "bf318a56-8951-416b-a1b6-fd6236a2247a",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 31332,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        }
+      },
+      "detail": "Ping passed. Protocol 1; matching request ID bf318a56-8951-416b-a1b6-fd6236a2247a."
+    },
+    {
+      "label": "explicit disconnect",
+      "pid": 31332,
+      "exited": true
+    },
+    {
+      "label": "fresh connection after explicit disconnect",
+      "response": {
+        "version": 1,
+        "id": "c2f9c66a-aba3-4c2a-972c-31385969e28f",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 23092,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        }
+      },
+      "detail": "Ping passed. Protocol 1; matching request ID c2f9c66a-aba3-4c2a-972c-31385969e28f."
+    },
+    {
+      "label": "terminated helper",
+      "pid": 23092,
+      "detail": "Helper disconnected unexpectedly. Click Test helper connection to start a fresh helper. Chrome: Native host has exited."
+    },
+    {
+      "label": "fresh connection after terminated helper",
+      "response": {
+        "version": 1,
+        "id": "4a15c619-e230-48e9-b505-0bebe1b24a3d",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 19360,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        }
+      },
+      "detail": "Ping passed. Protocol 1; matching request ID 4a15c619-e230-48e9-b505-0bebe1b24a3d."
+    },
+    {
+      "label": "unregistered helper",
+      "detail": "Helper is not registered. Run scripts/register-host.ps1, then try again. Chrome: Specified native messaging host not found."
+    },
+    {
+      "label": "fresh connection after re-register",
+      "response": {
+        "version": 1,
+        "id": "641af770-fa73-4140-ac5f-1da1872f47f6",
+        "type": "pong",
+        "host": {
+          "name": "com.flamehorn.social_summarizer_spike",
+          "pid": 31372,
+          "nodeVersion": "v24.15.0",
+          "platform": "win32"
+        }
+      },
+      "detail": "Ping passed. Protocol 1; matching request ID 641af770-fa73-4140-ac5f-1da1872f47f6."
+    },
+    {
+      "label": "test page closed",
+      "pid": 31372,
+      "exited": true
+    }
+  ],
+  "allPassed": true
+}

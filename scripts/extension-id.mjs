@@ -7,6 +7,6 @@ export function idFromKey(key) {
     .flatMap((byte) => [byte >> 4, byte & 15]).map((nibble) => String.fromCharCode(97 + nibble)).join('');
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const manifest = JSON.parse(await readFile(new URL('../src/extension/manifest.json', import.meta.url), 'utf8'));
+  const manifest = JSON.parse(await readFile(new URL('../apps/extension/src/manifest.json', import.meta.url), 'utf8'));
   console.log(idFromKey(manifest.key));
 }

@@ -1,10 +1,12 @@
 node_modules/
 dist/
 .native-host/
-evidence/*.png
-evidence/chrome-live.json
-evidence/*.zip
+docs/feasibility/evidence/*.png
+docs/feasibility/evidence/chrome-live.json
+/evidence/
 .research/
 chatgpt-auth.json
 chatgpt-host.json
 .chatgpt-auth.*.tmp
+*.lock/
+*.log

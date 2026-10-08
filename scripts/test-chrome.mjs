@@ -11,7 +11,7 @@ if (process.platform !== 'win32') throw new Error('The live feasibility test req
 const root = fileURLToPath(new URL('../', import.meta.url));
 const extensionPath = path.join(root, 'dist/extension');
 const hostEntry = path.join(root, 'dist/host/index.cjs');
-const evidencePath = path.join(root, 'evidence');
+const evidencePath = path.join(root, 'docs/feasibility/evidence');
 const manifest = JSON.parse(await readFile(path.join(extensionPath, 'manifest.json'), 'utf8'));
 const extensionId = idFromKey(manifest.key);
 const results = [];
