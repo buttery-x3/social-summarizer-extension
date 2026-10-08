@@ -92,7 +92,7 @@ All previous commands/options remain available, including `profiles`, `select PR
 
 ## Evidence, licensing and next work
 
-[FLAME-136 migration results](docs/feasibility/FLAME-136-workspaces.md) contain the old-to-new path map, exact checks, dependency review and outstanding live account verification. [FLAME-134 results](docs/feasibility/FLAME-134-results.md) preserve the original transport findings. The earlier FLAME-135 source attachment is preserved as a [historical archive](docs/feasibility/evidence/README.md), outside the active installation.
+[FLAME-136 migration results](docs/feasibility/FLAME-136-workspaces.md) contain the old-to-new path map, exact checks, dependency review, user-confirmed live account verification and remaining limits. [FLAME-134 results](docs/feasibility/FLAME-134-results.md) preserve the original transport findings. The earlier FLAME-135 source attachment is preserved as a [historical archive](docs/feasibility/evidence/README.md), outside the active installation.
 
 The owner has not chosen an application licence: first-party packages retain `UNLICENSED`, and this cleanup grants no redistribution rights. Existing third-party rights and notices remain intact. The unmodified DevKit has its own **noncommercial licence**, not MIT/Apache; see [helper third-party notices](apps/helper/THIRD_PARTY_NOTICES.md) and the [upstream licence](apps/helper/vendor/devkit/LICENSE).
 

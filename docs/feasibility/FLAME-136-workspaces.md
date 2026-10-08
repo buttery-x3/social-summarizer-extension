@@ -63,13 +63,15 @@ The real Chrome test recorded completion at **20:55 AEDT (09:55 UTC)**. It passe
 
 An independent Git source export into a fresh temporary directory contained no `node_modules`, first-party/SDK `dist`, old `chatgpt-cli` directory or ignored artifacts. With only a root installation, these commands all passed: `npm ci --no-audit --no-fund`, `npm run typecheck` (before building the apps), `npm run build`, `npm test`, `npm run test:sdk`, `npm run test:registration`, `npm run chatgpt -- help`, `npm run extension:id` and `npm ls --workspaces --depth=0`. Results matched the primary checkout: 21 first-party passes, 56 SDK passes/one unchanged skip, native DPAPI loading/ACL checks, original extension ID, and both compiler versions. No inherited old dependency/build artifacts were needed.
 
-## User-confirmed results and remaining live check
+## User-confirmed live migration results and remaining limits
 
 FLAME-135's original automated report left live sign-in/inference outstanding. The user later confirmed "tested manually and reviewed confirmed live acceptance ✅" on the completed issue at 20:31 AEDT on 8 October 2026. The detailed write-up records that correction without inventing raw output or reopening FLAME-134/135.
 
 During this migration, the user reran the root CLI and reported that summary gives an error because they are currently signed out, while the CLI appears functional. That verifies the migrated diagnostic entry point's signed-out refusal, **not** live post-migration inference or restored account state. The agent did not read, clear or migrate the user's real credentials, nor start account sign-in or model requests.
 
-The remaining user-run verification, from the repository root under the same Windows account:
+The user subsequently ran the current root command sequence and reported on 8 October 2026 that both summary commands work and repeat the output. Each CLI invocation starts a separate process, so the second successful summary confirms protected connection reuse after process restart. This is **user-confirmed live post-migration inference and restart reuse**, not an agent-observed provider trace. No raw authentication diagnostics or credentials were collected. The initial signed-out result above remains part of the evidence history.
+
+The reproducible live verification, from the repository root under the same Windows account:
 
 ```powershell
 npm run chatgpt -- sign-in
@@ -80,7 +82,7 @@ npm run chatgpt -- status
 npm run chatgpt -- summary
 ```
 
-Complete browser sign-in/plan permission, then require nonempty `Completed summary (...)` output. The final two commands are new processes and verify the protected connection's reuse. `sign-in --consent` remains available when deliberately reconnecting plan permission. Keep existing credentials; do not use `--new` or clear commands as migration steps. Real token refresh/revocation/usage limits, account/region restrictions, live cancellation and Windows ARM64 remain unverified in this rerun; synthetic test coverage is not live evidence.
+Complete browser sign-in/plan permission, then require nonempty `Completed summary (...)` output. The final two commands are new processes and verify the protected connection's reuse. Both summaries use the same built-in invented transcript, so repeated content is expected; the second call checks persistence, not a different summarisation task. `sign-in --consent` remains available when deliberately reconnecting plan permission. Keep existing credentials; do not use `--new` or clear commands as migration steps. Real token refresh/revocation/usage limits, account/region restrictions, live cancellation and Windows ARM64 remain unverified in this rerun; synthetic test coverage is not live evidence.
 
 All compatibility-sensitive values are unchanged: manifest key/ID, native-host name, ChatGPT app name/ID, `CHATGPT_SPIKE_*` configuration, default storage directory, encryption-provider ID, DPAPI entropy/envelope and SDK profile/installation identifiers. Within the same checkout, registration path compatibility is preserved. If moving the checkout itself, first unregister using its old location; then build/register at the new location. Both scripts retain strict ownership checks.
 
