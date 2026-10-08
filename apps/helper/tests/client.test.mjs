@@ -6,9 +6,9 @@ import { setTimeout as delay } from 'node:timers/promises';
 import test from 'node:test';
 import { createChatGPT } from '@siwc/local';
 import { ConnectionStore } from '../vendor/devkit/packages/local/dist/storage.js';
-import { createDpapiEncryption } from '../dist/dpapi.js';
-import { prepareStorage } from '../dist/storage.js';
-import { inventedTranscript, summariseInventedTranscript } from '../dist/client.js';
+import { createDpapiEncryption } from '../dist/chatgpt/dpapi.js';
+import { prepareStorage } from '../dist/chatgpt/storage.js';
+import { inventedTranscript, summariseInventedTranscript } from '../dist/chatgpt/client.js';
 
 async function fixture(t, openBrowser = () => assert.fail('No browser expected')) {
   const directory = await mkdtemp(join(tmpdir(), 'chatgpt-client-test-'));

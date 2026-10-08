@@ -1,5 +1,5 @@
 import { ChatGPTError, CHATGPT_USAGE_URL } from '@siwc/local';
-import { createWindowsClient, requirePlan, summariseInventedTranscript } from './client.js';
+import { createWindowsClient, requirePlan, summariseInventedTranscript } from './chatgpt/client.js';
 
 const help = `Windows ChatGPT feasibility CLI (personal noncommercial experiment)
   sign-in [--new] [--consent]   Continue with ChatGPT in your default browser

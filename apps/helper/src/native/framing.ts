@@ -1,4 +1,4 @@
-import { MAX_FRAME_BYTES } from '../shared/protocol.ts';
+import { MAX_FRAME_BYTES } from '@social-summarizer/protocol';
 
 // Windows Native Messaging uses a uint32 little-endian UTF-8 byte count.
 export function encodeFrame(value: unknown): Buffer {

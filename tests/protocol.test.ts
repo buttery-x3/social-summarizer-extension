@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { handleRequest, HOST_NAME, isSuccessResponse } from '../src/shared/protocol.ts';
+import { handleRequest } from '../apps/helper/src/native/handle-request.ts';
+import { HOST_NAME, isSuccessResponse } from '@social-summarizer/protocol';
 
 const host = { name: HOST_NAME, pid: 42, nodeVersion: 'v24.15.0', platform: 'win32' };
 test('hello/ping preserve version and request ID', () => {

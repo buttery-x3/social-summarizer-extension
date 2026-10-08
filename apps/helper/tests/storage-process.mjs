@@ -5,8 +5,8 @@ import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { createChatGPT } from '@siwc/local';
 import { ConnectionStore } from '../vendor/devkit/packages/local/dist/storage.js';
-import { createDpapiEncryption } from '../dist/dpapi.js';
-import { prepareStorage } from '../dist/storage.js';
+import { createDpapiEncryption } from '../dist/chatgpt/dpapi.js';
+import { prepareStorage } from '../dist/chatgpt/storage.js';
 
 const [operation, directory] = process.argv.slice(2);
 const provider = createDpapiEncryption();

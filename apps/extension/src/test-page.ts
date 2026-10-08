@@ -1,4 +1,4 @@
-import type { SuccessResponse } from '../shared/protocol.ts';
+import type { SuccessResponse } from '@social-summarizer/protocol';
 
 const testButton = document.querySelector<HTMLButtonElement>('#test')!;
 const disconnectButton = document.querySelector<HTMLButtonElement>('#disconnect')!;

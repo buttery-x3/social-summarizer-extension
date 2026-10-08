@@ -15,7 +15,7 @@ function Assert-Windows {
 }
 
 function Get-ProjectExtensionId {
-    $manifest = Get-Content -LiteralPath (Join-Path $script:ProjectRoot 'src/extension/manifest.json') -Raw | ConvertFrom-Json
+    $manifest = Get-Content -LiteralPath (Join-Path $script:ProjectRoot 'apps/extension/src/manifest.json') -Raw | ConvertFrom-Json
     $hash = [Security.Cryptography.SHA256]::Create()
     try { $digest = $hash.ComputeHash([Convert]::FromBase64String($manifest.key)) }
     finally { $hash.Dispose() }

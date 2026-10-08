@@ -1,6 +1,7 @@
 import { once } from 'node:events';
-import { FrameDecoder, encodeFrame } from './framing.ts';
-import { handleRequest, HOST_NAME } from '../shared/protocol.ts';
+import { FrameDecoder, encodeFrame } from './framing.js';
+import { HOST_NAME } from '@social-summarizer/protocol';
+import { handleRequest } from './handle-request.js';
 
 const host = { name: HOST_NAME, pid: process.pid, nodeVersion: process.version, platform: process.platform };
 const decoder = new FrameDecoder();

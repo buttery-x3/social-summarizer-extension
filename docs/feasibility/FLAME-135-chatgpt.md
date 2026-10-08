@@ -1,25 +1,24 @@
 # FLAME-135: Windows ChatGPT sign-in feasibility
 
-A standalone CLI summarises one built-in invented transcript with an explicitly authorised ChatGPT plan. The auth/client modules can be reused by a later local helper. This experiment is independent of the extension and Native Messaging spike.
+A diagnostic CLI summarises one built-in invented transcript with an explicitly authorised ChatGPT plan. Its reusable auth/client modules now live in the helper workspace alongside the separate Native Messaging entry point. The two demonstrations remain unconnected. See the [workspace README](../../README.md) for current setup and [migration results](FLAME-136-workspaces.md) for newly rerun checks.
 
 ## Setup and commands
 
-Use **Node 24.15.0**, npm **11.12.1**, Windows x64, and a ChatGPT account eligible for plan usage. Source and dependency versions are pinned below. From this workspace:
+Use **Node 24.15.0**, npm **11.12.1**, Windows x64, and a ChatGPT account eligible for plan usage. Source and dependency versions are pinned below. From the repository root:
 
 ```powershell
-Set-Location D:\dev\social-summarizer-extension\chatgpt-cli
-npm ci --ignore-scripts
+npm ci
 npm run build
 npm run chatgpt -- sign-in
 npm run chatgpt -- models
 npm run chatgpt -- summary
 ```
 
-For the source attachment, extract it and enter its `chatgpt-cli` directory before the npm commands. Dependencies use prebuilt binaries; installation does not need Electron, Python or Visual Studio.
+For a current source export, extract it and enter its root before the npm commands. Root `.npmrc` disables dependency install scripts. The original FLAME-135 attachment's layout is preserved as [historical evidence](evidence/README.md); use the current root commands for this checkout. Dependencies use prebuilt binaries; installation does not need Electron, Python or Visual Studio on the tested Windows x64 runtime.
 
 Complete **Continue with ChatGPT** in the default browser, choose your account/workspace, and allow ChatGPT plan use. A connected identity alone does not pass the proof. Only `Completed summary (...)` with nonempty text passes the inference portion.
 
-Each command starts a new process. Verify restart and clear behaviour with:
+Each command starts a new process. Verify restart and, only when intentionally disconnecting, clear behaviour with the sequence below. Credential clearing is not required by the workspace migration:
 
 ```powershell
 npm run chatgpt -- status
@@ -55,15 +54,15 @@ Use `sign-in --consent` only when choosing to enable or reconnect plan permissio
 | `CHATGPT_SPIKE_PORT` | `0` | SDK selects a free IPv4 loopback port. An explicit integer from 1 to 65535 is also accepted. |
 | `--timeout-ms` | `300000` | Sign-in/model/summary deadline, from 1 to 600000 milliseconds. |
 
-The official flow supports local personal experiments. It dynamically registers the initial OAuth client; no pre-issued client ID, client secret or API key is needed. The issued client ID stays with its profile. Eligibility for a particular user's account/workspace still needs the live test. [Integration guide](https://developers.openai.com/cookbook/articles/sign-in-with-chatgpt)
+The official flow supports local personal experiments. It dynamically registers the initial OAuth client; no pre-issued client ID, client secret or API key is needed. The issued client ID stays with its profile. The user confirmed prior live acceptance on 8 October 2026; account/workspace eligibility was not independently rerun during this source move. [Integration guide](https://developers.openai.com/cookbook/articles/sign-in-with-chatgpt)
 
 The SDK starts `http://127.0.0.1:<port>/auth/callback` before opening the browser, validates state, PKCE and signed identity, and closes the listener on return/cancellation. The path and host remain fixed while the port can change. `sendHostId: true` enables the persistent installation identifier. [Registration contract](https://developers.openai.com/siwc/token-sharing-open-source/sign-in)
 
-`src/dpapi.ts` implements the required encryption interface without Electron. Each write gets a fresh AES-256-GCM key, protected by **CurrentUser DPAPI**. The encrypted payload authenticates the full header, DPAPI-wrapped key and nonce. No plaintext token or bare encryption key is written. The directory ACL allows only the current Windows SID and SYSTEM, inherited by new credential files. The SDK supplies atomic replacement and an interprocess lock around storage/refresh; two Windows processes were tested against one rotating synthetic refresh token.
+`apps/helper/src/chatgpt/dpapi.ts` implements the required encryption interface without Electron. Each write gets a fresh AES-256-GCM key, protected by **CurrentUser DPAPI**. The encrypted payload authenticates the full header, DPAPI-wrapped key and nonce. No plaintext token or bare encryption key is written. The directory ACL allows only the current Windows SID and SYSTEM, inherited by new credential files. The SDK supplies atomic replacement and an interprocess lock around storage/refresh; two Windows processes were tested against one rotating synthetic refresh token.
 
 Microsoft documents that DPAPI can occasionally succeed with corrupted output, so the authenticated envelope adds an independent integrity check. [CryptUnprotectData](https://learn.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptunprotectdata)
 
-`src/client.ts` discovers visible account-specific models, preserves server order, and uses the selected slug. The SDK sends the public `/v1/responses` request with message-array input, `stream: true` and `store: false`. The wrapper prints no partial output and requires the SDK's completed result plus nonempty text. [Models and inference](https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference)
+`apps/helper/src/chatgpt/client.ts` discovers visible account-specific models, preserves server order, and uses the selected slug. The SDK sends the public `/v1/responses` request with message-array input, `stream: true` and `store: false`. The wrapper prints no partial output and requires the SDK's completed result plus nonempty text. [Models and inference](https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference)
 
 The CLI prints safe SDK errors with status/code/request ID/response shape when supplied. It never prints raw API errors, tokens, stack traces or authorization URLs, and never switches billing paths. Interrupted/incomplete/failed streams fail. A damaged credential file is preserved; recover its original OS-backed storage rather than overwriting it. [Errors and recovery](https://developers.openai.com/siwc/token-sharing-open-source/errors-and-recovery)
 
@@ -80,11 +79,13 @@ The pinned SDK deliberately omits retained ID tokens from browser URLs to keep t
 | `openai` / `jose` / `proper-lockfile` | `7.21.0` / `6.2.12` / `4.1.2` |
 | TypeScript / Node types | `7.0.2` / `24.13.5` |
 
-The npm registry returned 404 for `@siwc/local` on 8 October 2026. It is a private workspace package, so its unmodified source, tests and build/notice files are vendored under `vendor/devkit`. `UPSTREAM.json` records provenance and source hashes; builds verify those hashes. The SDK is Node-based, but the upstream Paste Perfect application is macOS-only. Windows support here is established for this adapter and local/synthetic operations, not yet live auth/inference or Windows ARM64.
+The npm registry returned 404 for `@siwc/local` on 8 October 2026. It is an upstream private workspace package, so its unmodified source, tests and build/notice files are vendored under `apps/helper/vendor/devkit` and installed as the helper's pinned local dependency. `UPSTREAM.json` records provenance and source hashes; builds verify those hashes. The SDK is Node-based, but the upstream Paste Perfect application is macOS-only. Local/synthetic Windows adapter operations were independently tested; the user subsequently confirmed live acceptance. Windows ARM64 remains unverified.
 
-The user confirmed **personal noncommercial experimentation with no intended commercial application**. The [DevKit licence](vendor/devkit/LICENSE) is a noncommercial licence, not MIT/Apache: it excludes business product development/testing even without charging a fee, unless separately agreed with OpenAI. Preserve that licence and the [upstream notices](vendor/devkit/THIRD_PARTY_NOTICES.md); do not relicense upstream components under an application licence. This independent exploratory source is inspectable and has no new redistribution grant (`UNLICENSED`). See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for dependency licence copies and attribution. Recheck purpose, service eligibility and licensing before any commercial milestone or distribution.
+The user confirmed **personal noncommercial experimentation with no intended commercial application**. The [DevKit licence](../../apps/helper/vendor/devkit/LICENSE) is a noncommercial licence, not MIT/Apache: it excludes business product development/testing even without charging a fee, unless separately agreed with OpenAI. Preserve that licence and the [upstream notices](../../apps/helper/vendor/devkit/THIRD_PARTY_NOTICES.md); do not relicense upstream components under an application licence. The first-party source remains inspectable and `UNLICENSED`; the owner has not yet chosen an application licence, and consolidation grants no new redistribution rights. See [THIRD_PARTY_NOTICES.md](../../apps/helper/THIRD_PARTY_NOTICES.md) for dependency licence copies and attribution. Recheck purpose, service eligibility and licensing before any commercial milestone or distribution.
 
-## Observed evidence — 8 October 2026
+## Original automated evidence — 8 October 2026
+
+These rows preserve the original FLAME-135 automated findings. On 8 October 2026 at 20:31 AEDT, the user subsequently commented [on FLAME-135](https://linear.app/flamehorn-games/issue/FLAME-135/feasibility-chatgpt-sign-in-and-text-summarisation-from-a-windows): "tested manually and reviewed confirmed live acceptance ✅". The issue was marked Done. No raw authentication output was retained, and the source move does not reopen that completed proof.
 
 | Check | Result |
 | --- | --- |
@@ -96,8 +97,8 @@ The user confirmed **personal noncommercial experimentation with no intended com
 | Stream failures | Simulated SSE completion, abrupt EOF, failure/usage limit, incomplete and empty completion. Only nonempty completed output succeeds. Passed. |
 | Corrupted storage | Authenticated envelope mutations/truncation rejected. Damaged SDK file preserved across process restart/sign-in attempt. Passed. |
 | Test totals | Local suite: 10 passed. Unmodified SDK suite: 56 passed, 1 Unix-only permission/symlink test skipped. |
-| Real browser sign-in + plan permission + completed summary | **Outstanding — no live account proof recorded.** |
-| Real connection reused after restart; live disconnect/re-sign-in | **Outstanding.** Synthetic tests do not pass these live acceptance checks. |
+| Prior real browser sign-in + plan permission + completed summary | **User-confirmed live acceptance**, after the original automated report; not newly observed by this agent. |
+| Prior real connection reused after restart; live clear behaviour | Covered by the user's general confirmation of the earlier issue's live acceptance; no detailed account output supplied. |
 | Live refresh, revocation, usage limit, account/region policy, browser cancellation | **Untested live.** Refresh rotation/JWKS recovery/terminal auth errors are covered by mocked upstream tests. |
 
-The runnable implementation and README are ready. FLAME-135 must remain open until the user's browser-authorised sign-in and inference/restart/clear checks above pass. No Chrome/Discord/Native Messaging, installer or Electron integration is included.
+During FLAME-136, the user reran the migrated CLI and reported that summary fails because they are currently signed out, while the CLI appears functional. New automated helper tests passed, including real Windows DPAPI with synthetic credentials. Live sign-in, a completed invented-transcript summary and protected connection reuse after restart **remain outstanding for the reorganised checkout**. Prior user confirmation and new synthetic tests do not establish a post-migration live inference pass. The exact current commands are in the root README and migration results. No Discord, auth/summary Native Messaging operations, installer or Electron integration is included.

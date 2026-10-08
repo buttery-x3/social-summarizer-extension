@@ -21,7 +21,7 @@ export function validId(value: unknown): value is string {
   return typeof value === 'string' && /^[A-Za-z0-9_-]{1,80}$/.test(value);
 }
 
-export function handleRequest(value: unknown, host: HostInfo): Response {
+export function validateRequest(value: unknown): Request | ErrorResponse {
   const id = isRecord(value) && validId(value.id) ? value.id : null;
   const invalid = (code: ErrorResponse['error']['code'], message: string): ErrorResponse =>
     ({ version: PROTOCOL_VERSION, id, type: 'error', error: { code, message } });
@@ -33,8 +33,7 @@ export function handleRequest(value: unknown, host: HostInfo): Response {
   if (value.version !== PROTOCOL_VERSION) {
     return invalid('UNSUPPORTED_VERSION', `Expected protocol version ${PROTOCOL_VERSION}.`);
   }
-  return { version: PROTOCOL_VERSION, id: value.id,
-    type: value.type === 'hello' ? 'hello' : 'pong', host };
+  return { version: PROTOCOL_VERSION, id: value.id, type: value.type };
 }
 
 export function isSuccessResponse(value: unknown): value is SuccessResponse {

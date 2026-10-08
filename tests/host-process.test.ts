@@ -2,8 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { FrameDecoder, encodeFrame } from '../src/host/framing.ts';
-import { HOST_NAME, MAX_FRAME_BYTES } from '../src/shared/protocol.ts';
+import { FrameDecoder, encodeFrame } from '../apps/helper/src/native/framing.ts';
+import { HOST_NAME, MAX_FRAME_BYTES } from '@social-summarizer/protocol';
 
 const entry = fileURLToPath(new URL('../dist/host/index.cjs', import.meta.url));
 async function runHost(chunks: Buffer[]) {

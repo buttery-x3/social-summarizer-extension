@@ -11,7 +11,7 @@ if (-not (Test-Path -LiteralPath $hostEntry) -or -not (Test-Path -LiteralPath $b
 }
 $version = & $NodePath --version
 if ($LASTEXITCODE -ne 0 -or $version -notmatch '^v24\.') { throw "Node 24 required; got $version" }
-$sourceManifest = Get-Content -LiteralPath (Join-Path $script:ProjectRoot 'src/extension/manifest.json') -Raw | ConvertFrom-Json
+$sourceManifest = Get-Content -LiteralPath (Join-Path $script:ProjectRoot 'apps/extension/src/manifest.json') -Raw | ConvertFrom-Json
 $extensionManifest = Get-Content -LiteralPath $builtManifest -Raw | ConvertFrom-Json
 if ($sourceManifest.key -ne $extensionManifest.key) { throw 'Manifest key changed. Rebuild first.' }
 $extensionId = Get-ProjectExtensionId

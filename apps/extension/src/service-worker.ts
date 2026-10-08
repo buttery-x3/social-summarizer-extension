@@ -1,4 +1,4 @@
-import { HOST_NAME, PROTOCOL_VERSION, isRecord, isSuccessResponse, type SuccessResponse } from '../shared/protocol.ts';
+import { HOST_NAME, PROTOCOL_VERSION, isRecord, isSuccessResponse, type SuccessResponse } from '@social-summarizer/protocol';
 
 type Status = { state: 'disconnected' | 'connecting' | 'connected' | 'error'; detail: string; response?: SuccessResponse };
 type Pending = { type: 'hello' | 'pong'; resolve: (value: SuccessResponse) => void; reject: (error: Error) => void; timer: ReturnType<typeof setTimeout> };

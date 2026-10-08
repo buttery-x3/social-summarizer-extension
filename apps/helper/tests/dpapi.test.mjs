@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createDpapiEncryption } from '../dist/dpapi.js';
+import { createDpapiEncryption } from '../dist/chatgpt/dpapi.js';
 
 test('authenticated DPAPI envelope rejects changes in every region and truncated data', async () => {
   const provider = createDpapiEncryption();

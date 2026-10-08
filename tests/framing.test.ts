@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { FrameDecoder, encodeFrame } from '../src/host/framing.ts';
-import { MAX_FRAME_BYTES } from '../src/shared/protocol.ts';
+import { FrameDecoder, encodeFrame } from '../apps/helper/src/native/framing.ts';
+import { MAX_FRAME_BYTES } from '@social-summarizer/protocol';
 
 test('UTF-8 length counts bytes, including non-ASCII/newline content', () => {
   const message = { value: 'hello 🐉\n世界' };
